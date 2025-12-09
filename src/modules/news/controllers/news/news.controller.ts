@@ -6,6 +6,7 @@ import {
   Delete,
   Body,
   Param,
+  Query,
   HttpCode,
   HttpStatus,
 } from '@nestjs/common';
@@ -17,6 +18,8 @@ import { UpdateService } from '../../services/news/update/update.service';
 import { DeleteService } from '../../services/news/delete/delete.service';
 import { CreateNewsRequestDto } from '../../dtos/news/create-news.request.dto';
 import { UpdateNewsRequestDto } from '../../dtos/news/update-news.request.dto';
+import { ListNewsRequestDto } from '../../dtos/news/list-news.request.dto';
+import { ListNewsResponseDto } from '../../dtos/news/list-news.response.dto';
 import { NewsResponseDto } from '../../dtos/news/news.response.dto';
 
 @ApiTags('news')
@@ -40,10 +43,10 @@ export class NewsController {
   }
 
   @Get()
-  @ApiOperation({ summary: 'List all news' })
-  @ApiResponse({ status: 200, description: 'List of news', type: [NewsResponseDto] })
-  async list() {
-    return this.listService.execute();
+  @ApiOperation({ summary: 'List news with pagination and filters' })
+  @ApiResponse({ status: 200, description: 'Paginated list of news', type: ListNewsResponseDto })
+  async list(@Query() query: ListNewsRequestDto) {
+    return this.listService.execute(query);
   }
 
   @Get(':id')

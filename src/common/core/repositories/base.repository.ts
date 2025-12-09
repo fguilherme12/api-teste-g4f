@@ -35,6 +35,27 @@ export abstract class BaseRepository<T> implements IBaseRepository<T> {
     return this.prisma[this.modelName].findMany();
   }
 
+  async findMany(options?: { where?: any; skip?: number; take?: number; orderBy?: any }): Promise<T[]> {
+    const where = this.useSoftDelete
+      ? { ...options?.where, deletedAt: null }
+      : options?.where;
+
+    return this.prisma[this.modelName].findMany({
+      where,
+      skip: options?.skip,
+      take: options?.take,
+      orderBy: options?.orderBy || { createdAt: 'desc' },
+    });
+  }
+
+  async count(where?: any): Promise<number> {
+    const whereClause = this.useSoftDelete
+      ? { ...where, deletedAt: null }
+      : where;
+
+    return this.prisma[this.modelName].count({ where: whereClause });
+  }
+
   async update(id: string, data: any): Promise<T> {
     const updateData = { ...data };
     if (this.useSoftDelete) {

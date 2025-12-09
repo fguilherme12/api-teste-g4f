@@ -1,6 +1,7 @@
-import { News } from "../../../types/news.types";
+import { ListNewsRequestDto } from '../../../dtos/news/list-news.request.dto';
+import { ListNewsResponseDto } from '../../../dtos/news/list-news.response.dto';
 
 export interface IListService {
-  execute(): Promise<News[]>;
+  execute(filters: ListNewsRequestDto): Promise<ListNewsResponseDto>;
 }
 

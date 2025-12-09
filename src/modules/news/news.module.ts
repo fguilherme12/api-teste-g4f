@@ -6,6 +6,7 @@ import { GetByIdService } from './services/news/get-by-id/get-by-id.service';
 import { ListService } from './services/news/list/list.service';
 import { UpdateService } from './services/news/update/update.service';
 import { DeleteService } from './services/news/delete/delete.service';
+import { CacheService } from '../../common/core/cache/cache.service';
 
 @Module({
   controllers: [NewsController],
@@ -16,6 +17,7 @@ import { DeleteService } from './services/news/delete/delete.service';
     ListService,
     UpdateService,
     DeleteService,
+    CacheService,
   ],
   exports: [NewsRepository],
 })

@@ -24,7 +24,8 @@
     "prisma:deploy": "prisma migrate deploy --schema=src/database/schema.prisma",
     "db:push": "prisma db push --schema=src/database/schema.prisma",
     "generate": "prisma generate --schema=src/database/schema.prisma",
-    "postinstall": "prisma generate --schema=src/database/schema.prisma"
+    "postinstall": "prisma generate --schema=src/database/schema.prisma",
+    "seed": "ts-node prisma/seed.ts"
   },
   "dependencies": {
     "@nestjs/common": "^10.0.0",

@@ -6,7 +6,7 @@ services:
       POSTGRES_USER: testeg4f
       POSTGRES_PASSWORD: testeg4f
       POSTGRES_DB: testeg4f
-    healthcheck:
+    healthcheck: 
       interval: 10s
       retries: 10
       test: "pg_isready -U $$POSTGRES_USER -d $$POSTGRES_DB"
@@ -30,6 +30,8 @@ services:
       - DATABASE_URL=postgresql://testeg4f:testeg4f@database:5432/testeg4f
       - JWT_SECRET=${JWT_SECRET:-your-secret-key-change-in-production}
       - PORT=3000
+      - SEED_USER_EMAIL=${SEED_USER_EMAIL:-admin@test.com}
+      - SEED_USER_PASSWORD=${SEED_USER_PASSWORD:-admin123}
     ports:
       - '3000:3000'
     depends_on:
@@ -38,7 +40,7 @@ services:
     networks:
       - g4f-network
     restart: unless-stopped
-    command: sh -c "npx prisma db push --schema=src/database/schema.prisma --skip-generate && node dist/main"
+    command: sh -c "npx prisma db push --schema=src/database/schema.prisma --skip-generate && npx ts-node prisma/seed.ts && node dist/src/main"
 
 volumes:
   postgres_data:

@@ -49,11 +49,15 @@ Crie um arquivo `.env` na raiz do projeto:
 ```bash
 DATABASE_URL=postgresql://testeg4f:testeg4f@localhost:5434/testeg4f
 JWT_SECRET=your-secret-key-change-in-production
+SEED_USER_EMAIL=admin@test.com
+SEED_USER_PASSWORD=admin123
 ```
 
 **Variáveis de ambiente:**
 - `DATABASE_URL` - URL de conexão com PostgreSQL
 - `JWT_SECRET` - Chave secreta para assinatura de tokens JWT
+- `SEED_USER_EMAIL` - Email do usuário criado pelo seed (padrão: admin@test.com)
+- `SEED_USER_PASSWORD` - Senha do usuário criado pelo seed (padrão: admin123)
 
 ## Execução Local
 
@@ -79,7 +83,19 @@ Ou execute as migrações:
 npm run prisma:deploy
 ```
 
-### 3. Executar a Aplicação
+### 3. Executar o Seed
+
+Execute o seed para criar usuário e notícias de teste:
+
+```bash
+npm run seed
+```
+
+O seed criará:
+- Um usuário com as credenciais definidas nas variáveis de ambiente
+- 20 notícias de teste
+
+### 4. Executar a Aplicação
 
 **Desenvolvimento:**
 ```bash
@@ -102,9 +118,15 @@ A API estará disponível em: **http://localhost:3000**
 docker compose up -d
 ```
 
+O seed é executado automaticamente ao iniciar o container da API.
+
 A API estará disponível em: **http://localhost:3000**
 
 **Documentação Swagger:** http://localhost:3000/api/docs
+
+**Credenciais padrão do seed:**
+- Email: `admin@test.com`
+- Senha: `admin123`
 
 Para parar os containers:
 ```bash
