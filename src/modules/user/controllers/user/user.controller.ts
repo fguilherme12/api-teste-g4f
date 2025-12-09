@@ -16,6 +16,7 @@ import { ListService } from '../../services/user/list/list.service';
 import { UpdateService } from '../../services/user/update/update.service';
 import { DeleteService } from '../../services/user/delete/delete.service';
 import { RegisterUserRequestDto } from '../../dtos/user/register.request.dto';
+import { RegisterResponseDto } from '../../dtos/user/register.response.dto';
 import { UpdateUserRequestDto } from '../../dtos/user/update.request.dto';
 import { UserResponseDto } from '../../dtos/user/user.response.dto';
 
@@ -31,8 +32,10 @@ export class UserController {
   ) {}
 
   @Post()
+  @HttpCode(HttpStatus.CREATED)
   @ApiOperation({ summary: 'Register a new user' })
-  @ApiResponse({ status: 201, type: UserResponseDto })
+  @ApiResponse({ status: 201, description: 'User registered successfully', type: RegisterResponseDto })
+  @ApiResponse({ status: 409, description: 'Email already registered' })
   async register(@Body() data: RegisterUserRequestDto) {
     return this.registerService.execute(data);
   }
